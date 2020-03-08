@@ -21,6 +21,7 @@ custom:
 plugins:
   - serverless-webpack
   - serverless-offline-sqs
+  - serverless-dynamodb-local
   - serverless-offline
 
 provider:
