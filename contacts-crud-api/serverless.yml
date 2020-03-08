@@ -8,6 +8,14 @@ custom:
   webpack:
     webpackConfig: ./webpack.config.js
     includeModules: true
+  serverless-offline-sqs:
+    autoCreate: true
+    apiVersion: '2012-11-05'
+    endpoint: http://0.0.0.0:9324
+    region: us-east-1
+    accessKeyId: root
+    secretAccessKey: root
+    skipCacheInvalidation: false
 
 # Add the serverless-webpack plugin
 plugins:
@@ -24,9 +32,19 @@ provider:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
 
 functions:
-  hello:
-    handler: handler.hello
+  createContact:
+    handler: ./src/controllers/contacts.create
     events:
-      - http:
-          method: get
-          path: hello
+      - sqs:
+          batchSize: 1
+          arn:
+            Fn::GetAtt:
+              - CreateContactQueue
+              - Arn
+
+resources:
+  Resources:
+    CreateContactQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: CreateContactQueue
