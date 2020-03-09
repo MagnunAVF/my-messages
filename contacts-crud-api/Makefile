@@ -8,22 +8,16 @@ help:
 run-elasticmq:
 	@ docker run -d -p 9324:9324 --name elasticmq softwaremill/elasticmq
 
-run-dynamodb:
-	@ docker run -p 8000:8000 --name dynamodb amazon/dynamodb-local
-
 run:
 	@ make run-elasticmq
-	@ make run-dynamodb
 	@ sleep 3
-	@ sls offline
+	@ sls offline start --stage dev
 
 stop:
 	@ docker stop elasticmq
 	@ docker container rm elasticmq
-	@ docker stop dynamodb
-	@ docker container rm dynamodb
 
 install:
 	@ docker pull softwaremill/elasticmq
-	@ docker pull mongo:xenial
 	@ npm i
+	@ sls dynamodb install
