@@ -13,6 +13,11 @@ run:
 	@ sleep 3
 	@ sls offline start --stage dev
 
+run-test:
+	@ make run-elasticmq
+	@ sleep 3
+	@ sls offline start --stage test
+
 stop:
 	@ docker stop elasticmq
 	@ docker container rm elasticmq
