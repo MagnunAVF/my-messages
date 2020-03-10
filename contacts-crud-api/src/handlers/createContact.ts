@@ -1,7 +1,7 @@
 import 'source-map-support/register';
-import { createItem } from "./../utils/dynamodb/create";
+import { createItem } from "../utils/dynamodb/create";
 
-export const create = async (event, context, callback) => {
+export const main = async (event, context, callback) => {
     event.Records.forEach(async element => {
         const data = JSON.parse(element.body);
 

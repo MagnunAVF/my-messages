@@ -55,7 +55,7 @@ provider:
 
 functions:
   createContact:
-    handler: ./src/controllers/contacts.create
+    handler: ./src/handlers/createContact.main
     events:
       - sqs:
           batchSize: 1
